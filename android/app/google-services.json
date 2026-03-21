@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "124396531369",
+    "project_id": "sisimpresion3d-61540",
+    "storage_bucket": "sisimpresion3d-61540.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124396531369:android:55bbc553844fd3168f43b8",
+        "android_client_info": {
+          "package_name": "com.gvteam.sis_impresion_3d"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUc5Pk56alsJfRDc36jtKTk0LEB9tJYGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
