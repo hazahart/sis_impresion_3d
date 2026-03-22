@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sis_impresion_3d/ui/screens/home_screen.dart';
 
 import 'firebase_options.dart';
 import 'ui/screens/configuracion_screen.dart';
@@ -34,9 +35,11 @@ class SisImpresion3DApp extends StatelessWidget {
           Theme.of(context).textTheme
         ),
       ),
-      initialRoute: "/config_financiera",
+      initialRoute: "/home",
       routes: {
+        "/home": (context) => const HomeScreen(),
         "/config_financiera": (context) => const ConfiguracionScreen(),
+        // "/cotizacion": (context) => const CotizacionScreen(),
       },
     );
   }
