@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sis_impresion_3d/ui/screens/cotizacion_screen.dart';
 import 'configuracion_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,7 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _indiceActual = 0; 
 
   final List<Widget> _pantallas = [
-    // const CotizacionScreen(),
+    const CotizacionScreen(),
     const ConfiguracionScreen(),
   ];
 

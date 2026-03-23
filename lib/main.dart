@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sis_impresion_3d/ui/screens/cotizacion_screen.dart';
 import 'package:sis_impresion_3d/ui/screens/home_screen.dart';
 
 import 'firebase_options.dart';
@@ -39,7 +40,7 @@ class SisImpresion3DApp extends StatelessWidget {
       routes: {
         "/home": (context) => const HomeScreen(),
         "/config_financiera": (context) => const ConfiguracionScreen(),
-        // "/cotizacion": (context) => const CotizacionScreen(),
+        "/cotizacion": (context) => const CotizacionScreen(),
       },
     );
   }
