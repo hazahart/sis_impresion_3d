@@ -7,6 +7,7 @@ import 'package:sis_impresion_3d/ui/screens/home_screen.dart';
 
 import 'firebase_options.dart';
 import 'ui/screens/configuracion_screen.dart';
+import 'ui/screens/registro_pedido_screen.dart'; // <-- NUEVO
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +42,7 @@ class SisImpresion3DApp extends StatelessWidget {
         "/home": (context) => const HomeScreen(),
         "/config_financiera": (context) => const ConfiguracionScreen(),
         "/cotizacion": (context) => const CotizacionScreen(),
+        "/registro_pedido": (context) => const RegistroPedidoScreen(), // <-- NUEVO
       },
     );
   }

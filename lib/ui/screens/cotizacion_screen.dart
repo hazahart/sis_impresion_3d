@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:sis_impresion_3d/viewmodels/cotizacion_viewmodel.dart';
+import 'package:sis_impresion_3d/viewmodels/registro_pedido_viewmodel.dart';
 
 class CotizacionScreen extends ConsumerStatefulWidget {
   const CotizacionScreen({super.key});
@@ -61,6 +62,7 @@ class _CotizacionScreenState extends ConsumerState<CotizacionScreen> {
       context: context,
       backgroundColor: Colors.transparent,
       isDismissible: false,
+      enableDrag: false,
       builder: (BuildContext bc) {
         return Container(
           decoration: const BoxDecoration(
@@ -104,39 +106,102 @@ class _CotizacionScreenState extends ConsumerState<CotizacionScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 15),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF117533),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              const SizedBox(height: 24),
+              // ----------------------------------------------------------
+              // BOTONES "CANCELAR" Y "ACEPTAR"
+              // Reemplazan al botón único "Nueva Cotización" del Sprint 1.
+              // ----------------------------------------------------------
+              Row(
+                children: [
+                  // CANCELAR: limpia el form sin tocar la BD (requisito Trello)
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: Color(0xFF1B396A)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // cierra el modal
+                          ref.read(cotizacionViewModelProvider).resetearCalculo();
+                          _limpiarFormulario();
+                        },
+                        child: const Text(
+                          'Cancelar',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF1B396A),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    ref.read(cotizacionViewModelProvider).resetearCalculo();
+                  const SizedBox(width: 12),
+                  // ACEPTAR: guarda el snapshot cotizado y navega al registro
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF117533),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () {
+                          // 1. Persistimos los datos cotizados en el provider puente
+                          ref.read(datosCotizadosProvider.notifier).state =
+                              DatosCotizados(
+                            pesoGramos: double.parse(pesoCtr.text),
+                            horas: int.parse(horasCtr.text),
+                            minutos: int.parse(minutosCtr.text),
+                            material: _filamentoSeleccionado!,
+                            precioUnitario: resultado.total,
+                          );
 
-                    setState(() {
-                      pesoCtr.clear();
-                      horasCtr.clear();
-                      minutosCtr.clear();
-                      _filamentoSeleccionado = null;
-                      _isFormValid = false;
-                      _interactuados.updateAll((key, value) => false);
-                    });
-                  },
-                  child: const Text(
-                    'Nueva Cotización',
-                    style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                          // 2. Limpiamos la cotización actual
+                          Navigator.of(context).pop(); // cierra el modal
+                          ref.read(cotizacionViewModelProvider).resetearCalculo();
+                          _limpiarFormulario();
+
+                          // 3. Navegamos al formulario de registro
+                          Navigator.of(context).pushNamed('/registro_pedido');
+                        },
+                        child: const Text(
+                          'Aceptar',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
         );
       },
     );
+  }
+
+  /// Extracción de la limpieza del formulario a un método separado,
+  /// ya que ahora se invoca desde dos lugares (Aceptar y Cancelar).
+  void _limpiarFormulario() {
+    setState(() {
+      pesoCtr.clear();
+      horasCtr.clear();
+      minutosCtr.clear();
+      _filamentoSeleccionado = null;
+      _isFormValid = false;
+      _interactuados.updateAll((key, value) => false);
+    });
   }
 
   @override
