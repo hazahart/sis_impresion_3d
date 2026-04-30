@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:sis_impresion_3d/ui/screens/cotizacion_screen.dart';
 import 'package:sis_impresion_3d/ui/screens/home_screen.dart';
 
@@ -11,6 +12,7 @@ import 'ui/screens/registro_pedido_screen.dart'; // <-- NUEVO
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('es', '');
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
