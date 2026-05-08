@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../../models/usuario.dart';
 import 'cuenta_en_revision_screen.dart';
 import 'home_screen.dart';
+import 'login_screen.dart';
 import 'onboarding_screen.dart';
-import 'registro_screen.dart';
 
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
@@ -19,7 +19,6 @@ class AuthWrapper extends StatelessWidget {
       if (doc.exists) {
         return Usuario.fromMap(doc.data()!, id: uid);
       }
-      // Esperar antes del siguiente intento
       await Future.delayed(const Duration(milliseconds: 600));
     }
     return null;
@@ -36,7 +35,7 @@ class AuthWrapper extends StatelessWidget {
           );
         }
 
-        if (!authSnap.hasData) return const RegistroScreen();
+        if (!authSnap.hasData) return const LoginScreen();
 
         final firebaseUser = authSnap.data!;
 
@@ -49,8 +48,6 @@ class AuthWrapper extends StatelessWidget {
               );
             }
 
-            // Después de 5 intentos sigue sin existir
-            // → construir desde Auth y mandar al onboarding
             if (!snap.hasData || snap.data == null) {
               final correo = firebaseUser.email ?? '';
               final usuarioMinimo = Usuario(

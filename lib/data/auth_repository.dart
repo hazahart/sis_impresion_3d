@@ -42,6 +42,32 @@ class AuthRepository {
     }
   }
 
+  Future<Usuario> iniciarSesion({
+    required String correo,
+    required String contrasena,
+  }) async {
+    try {
+      final credencial = await _auth.signInWithEmailAndPassword(
+        email: correo.trim(),
+        password: contrasena,
+      );
+
+      final uid = credencial.user!.uid;
+      final doc = await _firestore.collection('usuarios').doc(uid).get();
+
+      if (!doc.exists) {
+        throw Exception('No se encontró el perfil del usuario.');
+      }
+
+      return Usuario.fromMap(doc.data()!, id: uid);
+    } on FirebaseAuthException catch (e) {
+      throw Exception(_mensajeAuth(e.code));
+    } catch (e) {
+      final msg = e.toString().replaceFirst('Exception: ', '');
+      throw Exception(msg);
+    }
+  }
+
   Future<({Usuario usuario, bool esNuevo})> signInConGoogle() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -160,6 +186,16 @@ class AuthRepository {
         return 'El formato del correo no es válido.';
       case 'weak-password':
         return 'La contraseña debe tener al menos 6 caracteres.';
+      case 'user-not-found':
+        return 'Correo o contraseña incorrectos.';
+      case 'wrong-password':
+        return 'Correo o contraseña incorrectos.';
+      case 'invalid-credential':
+        return 'Correo o contraseña incorrectos.';
+      case 'user-disabled':
+        return 'Esta cuenta ha sido deshabilitada.';
+      case 'too-many-requests':
+        return 'Demasiados intentos fallidos. Intenta más tarde.';
       default:
         return 'Error de autenticación. Inténtalo de nuevo.';
     }

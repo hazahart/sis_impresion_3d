@@ -6,6 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'firebase_options.dart';
 import 'ui/screens/auth_wrapper.dart';
 import 'ui/screens/home_screen.dart';
+import 'ui/screens/login_screen.dart';
 import 'ui/screens/registro_screen.dart';
 import 'ui/screens/configuracion_screen.dart';
 import 'ui/screens/cotizacion_screen.dart';
@@ -35,7 +36,8 @@ class SisImpresion3DApp extends StatelessWidget {
       home: const AuthWrapper(),
       routes: {
         '/home': (context) => const HomeScreen(),
-        '/login': (context) => const RegistroScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/registro': (context) => const RegistroScreen(),
         '/config_financiera': (context) => const ConfiguracionScreen(),
         '/cotizacion': (context) => const CotizacionScreen(),
         '/registro_pedido': (context) => const RegistroPedidoScreen(),
