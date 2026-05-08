@@ -3,23 +3,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:sis_impresion_3d/ui/screens/cotizacion_screen.dart';
-import 'package:sis_impresion_3d/ui/screens/home_screen.dart';
-
 import 'firebase_options.dart';
+import 'ui/screens/auth_wrapper.dart';
+import 'ui/screens/home_screen.dart';
+import 'ui/screens/registro_screen.dart';
 import 'ui/screens/configuracion_screen.dart';
-import 'ui/screens/registro_pedido_screen.dart'; // <-- NUEVO
+import 'ui/screens/cotizacion_screen.dart';
+import 'ui/screens/registro_pedido_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('es', '');
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  // #########################
-  // #      IMPORTANTE       #
-  // #    uso de riverpod    #
-  // #########################
   runApp(const ProviderScope(child: SisImpresion3DApp()));
 }
 
@@ -35,16 +30,15 @@ class SisImpresion3DApp extends StatelessWidget {
         primaryColor: const Color(0xFF1B365D),
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF117533)),
         useMaterial3: true,
-        textTheme: GoogleFonts.notoSansTextTheme(
-          Theme.of(context).textTheme
-        ),
+        textTheme: GoogleFonts.notoSansTextTheme(Theme.of(context).textTheme),
       ),
-      initialRoute: "/home",
+      home: const AuthWrapper(),
       routes: {
-        "/home": (context) => const HomeScreen(),
-        "/config_financiera": (context) => const ConfiguracionScreen(),
-        "/cotizacion": (context) => const CotizacionScreen(),
-        "/registro_pedido": (context) => const RegistroPedidoScreen(), // <-- NUEVO
+        '/home': (context) => const HomeScreen(),
+        '/login': (context) => const RegistroScreen(),
+        '/config_financiera': (context) => const ConfiguracionScreen(),
+        '/cotizacion': (context) => const CotizacionScreen(),
+        '/registro_pedido': (context) => const RegistroPedidoScreen(),
       },
     );
   }

@@ -12,7 +12,20 @@
           "package_name": "com.gvteam.sis_impresion_3d"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "124396531369-a4k81o2d5e1b7c99b82sgt8sh73f97m0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gvteam.sis_impresion_3d",
+            "certificate_hash": "d179c1d0cfdffc1116235c762fda197ec58f7955"
+          }
+        },
+        {
+          "client_id": "124396531369-vkralrb40o9iabi80eoi95j3monfrkoo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDUc5Pk56alsJfRDc36jtKTk0LEB9tJYGA"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124396531369-vkralrb40o9iabi80eoi95j3monfrkoo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "124396531369-32tpf4839qipmriotsi4c8vedkoudv00.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gvteam.sisImpresion3d"
+              }
+            }
+          ]
         }
       }
     }
